@@ -2,7 +2,7 @@ package message
 
 import "net/http"
 
-type Message struct {
+type Response struct {
 	Code    int         `json:"code" xml:"code" yaml:"code"`
 	Message string      `json:"message" xml:"message" yaml:"message"`
 	Data    interface{} `json:"data" xml:"data" yaml:"data"`
@@ -13,8 +13,8 @@ type Context interface {
 	AbortWithStatusJSON(code int, jsonObj interface{})
 }
 
-func Msg(data ...interface{}) Message {
-	result := Message{
+func Msg(data ...interface{}) Response {
+	result := Response{
 		Code:    http.StatusOK,
 		Message: "ok",
 		Data:    nil,
