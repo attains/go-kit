@@ -194,3 +194,14 @@ func MapToStruct(namingStrategy GormNamer, data map[string]interface{}, dst inte
 	}
 	return dstValue.Interface(), nil
 }
+
+func GetName(src interface{}) string {
+	t := reflect.TypeOf(src)
+	if t.Kind() == reflect.Ptr {
+		t = t.Elem()
+	}
+	if t.Kind() != reflect.Struct {
+		return ""
+	}
+	return t.Name()
+}
