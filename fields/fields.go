@@ -287,17 +287,14 @@ func (t *NullTime) Scan(v interface{}) error {
 }
 
 func (t *NullTime) UnmarshalJSON(v []byte) error {
-	strV := string(v)
-	if strV == "null" || strV == "" {
+	if string(v) == "null" {
 		t.Valid = false
 		return nil
 	}
-	parsedTime, err := time.ParseInLocation(`"2006-01-02 15:04:05"`, strV, time.Local)
-	if err != nil {
-		t.Valid = false
-		return err
+	err := json.Unmarshal(v, &t.Time)
+	if err == nil {
+		t.Valid = true
 	}
-	t.Time, t.Valid = parsedTime, true
 	return err
 }
 
